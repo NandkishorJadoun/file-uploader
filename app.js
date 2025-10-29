@@ -5,7 +5,7 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 const accountsRouter = require("./routes/accountsRouter");
 const passport = require("passport");
-// more requires
+const isAuth = require("./middlewares/isAuth");
 
 const app = express();
 
@@ -42,8 +42,13 @@ app.use((req, res, next) => {
 
 app.use("/accounts", accountsRouter);
 
-app.get("/", (req, res) => {
+app.get("/", isAuth, (req, res) => {
   res.render("home");
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(err.statusCode || 500).send(err.message);
 });
 
 app.listen(3000, (err) => {

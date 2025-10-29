@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const passport = require("../middlewares/passport");
 const { PrismaClient } = require("@prisma/client");
+const CustomNotFoundError = require("../errors/CustomNotFoundError");
 
 const prisma = new PrismaClient();
 
@@ -12,6 +13,10 @@ const signupPost = async (req, res) => {
   const { name, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  if(!hashedPassword){
+    throw new CustomNotFoundError("Hashed Password Not Found")
+  }
+
   await prisma.user.create({
     data: {
       name,
@@ -19,7 +24,7 @@ const signupPost = async (req, res) => {
       password: hashedPassword,
     },
   });
-  console.log(name, email, hashedPassword);
+
   res.redirect("/accounts/login");
 };
 
@@ -45,9 +50,19 @@ const loginPost = (req, res, next) => {
   })(req, res, next);
 };
 
+const logoutGet = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
 module.exports = {
   signupGet,
   signupPost,
   loginGet,
   loginPost,
+  logoutGet,
 };
