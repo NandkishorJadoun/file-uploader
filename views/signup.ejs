@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <h1>Sign Up Page</h1>
+    <form action="/accounts/signup" method="POST">
+      <p>
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name" />
+      </p>
+
+      <p>
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" />
+      </p>
+
+      <p>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" />
+      </p>
+
+      <p>
+        <button type="submit">Submit</button>
+      </p>
+    </form>
+  </body>
+</html>
