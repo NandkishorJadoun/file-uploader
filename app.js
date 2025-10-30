@@ -5,6 +5,8 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 const accountsRouter = require("./routes/accountsRouter");
 const passport = require("passport");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const isAuth = require("./middlewares/isAuth");
 
 const app = express();
@@ -44,6 +46,10 @@ app.use("/accounts", accountsRouter);
 
 app.get("/", isAuth, (req, res) => {
   res.render("home");
+});
+
+app.post("/file", upload.single("file"), (req, res) => {
+  res.redirect("/");
 });
 
 app.use((err, req, res, next) => {

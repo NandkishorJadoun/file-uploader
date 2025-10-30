@@ -7,8 +7,23 @@
   </head>
   <body>
     <% if(currentUser){ %>
-    <h1>Hi <%= currentUser.name %></h1>
+    <h1>
+      Hi
+      <%= currentUser.name %>
+    </h1>
     <%}%>
     <a href="/accounts/logout">Logout</a>
+    <form action="/file" method="POST" enctype="multipart/form-data">
+      <p>
+        <label for="file">Upload file: </label>
+        <input type="file" name="file" id="file" />
+      </p>
+
+      <img src="" alt="" />
+
+      <p>
+        <button type="submit">Submit</button>
+      </p>
+    </form>
   </body>
 </html>
