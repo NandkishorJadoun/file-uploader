@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=folder.name%></title>
+  </head>
+  <body>
+    <h1><%=folder.name%></h1>
+    <button class="upload-file-btn">Add File</button>
+    <dialog class="upload-file-dialog">
+      <form
+        action="/folders/<%=folder.id%>/file"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <p>
+          <label for="file">Upload file: </label>
+          <input type="file" name="file" id="file" />
+        </p>
+        <p>
+          <button type="submit">Submit</button>
+        </p>
+      </form>
+    </dialog>
+
+    <h2>Posts:</h2>
+    <%folder.posts.forEach(function(post){ %>
+    <p><%= post.name%></p>
+    <p><%= post.size%></p>
+    <p><%= post.fileType%></p>
+    <p><%= post.createdAt%></p>
+    <% }) %>
+
+    <script>
+      const uploadFileBtn = document.querySelector(".upload-file-btn");
+      const uploadFileDialog = document.querySelector(".upload-file-dialog");
+
+      uploadFileBtn.addEventListener("click", () => {
+        uploadFileDialog.showModal();
+      });
+    </script>
+  </body>
+</html>
