@@ -4,9 +4,9 @@ const expressSession = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 const accountsRouter = require("./routes/accountsRouter");
-const passport = require("passport");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const indexRouter = require("./routes/indexRouter");
+const foldersRouter = require("./routes/foldersRouter");
+const passport = require("./middlewares/passport");
 const isAuth = require("./middlewares/isAuth");
 
 const app = express();
@@ -37,20 +37,11 @@ app.use(
 
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
-
 app.use("/accounts", accountsRouter);
 
-app.get("/", isAuth, (req, res) => {
-  res.render("home");
-});
+app.use("/folders", isAuth, foldersRouter);
 
-app.post("/file", upload.single("file"), (req, res) => {
-  res.redirect("/");
-});
+app.use(isAuth, indexRouter);
 
 app.use((err, req, res, next) => {
   console.log(err);
