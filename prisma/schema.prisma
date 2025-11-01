@@ -38,11 +38,14 @@ model Folder {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  name      String
-  size      Int
-  fileType  String
-  createdAt DateTime @default(now())
-  Folder    Folder   @relation(fields: [folderId], references: [id])
-  folderId  Int
+  id           Int      @id @default(autoincrement())
+  name         String
+  size         Int
+  view_url     String
+  download_url String
+  createdAt    DateTime @default(now())
+  Folder       Folder   @relation(fields: [folderId], references: [id])
+  folderId     Int
+
+  @@map("posts")
 }
