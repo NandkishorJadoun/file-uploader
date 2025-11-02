@@ -33,7 +33,7 @@
         <%currentUser.folders.forEach(function(folder){%>
         <div class="folder-card">
           <p><%= folder.name%></p>
-          <p><%= folder.createdAt%></p>
+          <p><%= new Date(folder.createdAt).toDateString()%></p>
           <a href="/folders/<%=folder.id%>">View</a>
           <a href="/folders/<%=folder.id%>/update">Update</a>
           <form

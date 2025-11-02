@@ -30,14 +30,14 @@ model Folder {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
-  posts     Post[]
+  files     File[]
   User      User     @relation(fields: [userId], references: [id])
   userId    Int
 
   @@map("folders")
 }
 
-model Post {
+model File {
   id           Int      @id @default(autoincrement())
   name         String
   size         Int
@@ -47,5 +47,5 @@ model Post {
   Folder       Folder   @relation(fields: [folderId], references: [id])
   folderId     Int
 
-  @@map("posts")
+  @@map("files")
 }

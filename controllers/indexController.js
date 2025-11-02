@@ -3,12 +3,8 @@ const prisma = new PrismaClient();
 
 const getHomePage = async (req, res) => {
   const currentUser = await prisma.user.findUnique({
-    where: {
-      id: req.user.id,
-    },
-    include: {
-      folders: true,
-    },
+    where: { id: req.user.id },
+    include: { folders: true },
   });
 
   res.render("home", { currentUser });

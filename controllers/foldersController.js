@@ -21,7 +21,7 @@ const viewFolder = async (req, res) => {
       id: Number(folderId),
     },
     include: {
-      posts: true,
+      files: true,
     },
   });
   res.render("folder", { folder });
@@ -79,7 +79,7 @@ const uploadFilePost = async (req, res) => {
     uploadResult.original_filename,
   );
 
-  await prisma.post.create({
+  await prisma.file.create({
     data: {
       name: uploadResult.original_filename,
       size: uploadResult.bytes,

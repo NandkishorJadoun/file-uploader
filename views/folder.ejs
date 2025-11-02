@@ -16,7 +16,7 @@
       >
         <p>
           <label for="file">Upload file: </label>
-          <input type="file" name="file" id="file" />
+          <input type="file" name="file" id="file" accept="image/*,.pdf" />
         </p>
         <p>
           <button type="submit">Submit</button>
@@ -24,12 +24,13 @@
       </form>
     </dialog>
 
-    <h2>Posts:</h2>
-    <%folder.posts.forEach(function(post){ %>
-    <p><%= post.name%></p>
-    <p><%= post.size%></p>
-    <p><%= post.fileType%></p>
-    <p><%= post.createdAt%></p>
+    <h2>Files:</h2>
+    <%folder.files.forEach(function(file){ %>
+    <p><%= file.name%></p>
+    <p><%= file.size%></p>
+    <p><%= file.createdAt%></p>
+    <a href="<%= file.view_url%>">View</a>
+    <a href="<%= file.download_url%>">Download</a>
     <% }) %>
 
     <script>
