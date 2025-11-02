@@ -8,6 +8,7 @@ const indexRouter = require("./routes/indexRouter");
 const foldersRouter = require("./routes/foldersRouter");
 const passport = require("./middlewares/passport");
 const isAuth = require("./middlewares/isAuth");
+require("dotenv").config();
 
 const app = express();
 
@@ -28,7 +29,7 @@ app.use(
     cookie: {
       maxAge: 2 * 24 * 60 * 60 * 1000,
     },
-    secret: "a santa at nasa",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: prismaSessionStore,
