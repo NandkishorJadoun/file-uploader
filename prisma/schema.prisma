@@ -40,7 +40,7 @@ model Folder {
 model File {
   id           Int      @id @default(autoincrement())
   name         String
-  size         Int
+  size         String
   view_url     String
   download_url String
   createdAt    DateTime @default(now())

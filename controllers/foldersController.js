@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const uploadOnCloudinary = require("../services/cloudinary");
 const makeDownloadUrl = require("../utils/download");
+const formatBytes = require("../utils/formatSize");
 const prisma = new PrismaClient();
 
 const createFolderPost = async (req, res) => {
@@ -79,10 +80,12 @@ const uploadFilePost = async (req, res) => {
     uploadResult.original_filename,
   );
 
+  const formatSize = formatBytes(uploadResult.bytes);
+
   await prisma.file.create({
     data: {
       name: uploadResult.original_filename,
-      size: uploadResult.bytes,
+      size: formatSize,
       view_url: uploadResult.url,
       download_url: downloadUrl,
       folderId: Number(folderId),
