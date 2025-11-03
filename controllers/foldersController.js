@@ -62,12 +62,19 @@ const updateFolderPost = async (req, res) => {
 const deleteFolderPost = async (req, res) => {
   const { folderId } = req.params;
 
-  await prisma.folder.delete({
+  const deleteFiles = prisma.file.deleteMany({
+    where: {
+      folderId: Number(folderId),
+    },
+  });
+
+  const deleteFolder = prisma.folder.delete({
     where: {
       id: Number(folderId),
     },
   });
 
+  await prisma.$transaction([deleteFiles, deleteFolder]);
   res.redirect("/");
 };
 
