@@ -4,28 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/forms.css" />
   </head>
   <body>
-    <h1>Sign Up Page</h1>
-    <form action="/accounts/signup" method="POST">
-      <p>
-        <label for="name">Name: </label>
-        <input type="text" name="name" id="name" />
-      </p>
+    <main>
+      <div class="form-header">
+        <h1>Create an account</h1>
+        <p>Enter your information below to create your account</p>
+      </div>
+      <form action="/accounts/signup" method="POST">
+        <p>
+          <label for="name">Full Name</label>
+          <input type="text" name="name" id="name" placeholder="John Doe" />
+        </p>
 
-      <p>
-        <label for="email">Email: </label>
-        <input type="email" name="email" id="email" />
-      </p>
+        <p>
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="m@example.com"
+          />
+        </p>
 
-      <p>
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password" />
-      </p>
+        <p>
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" />
+          <span>Must be at least 6 characters long.</span>
+        </p>
 
-      <p>
-        <button type="submit">Submit</button>
-      </p>
-    </form>
+        <p>
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" />
+          <span>Please confirm your password.</span>
+        </p>
+        <%- include("partials/errors") %>
+        <p>
+          <button type="submit">Create Account</button>
+        </p>
+      </form>
+      <div class="auth-link">
+        Already have an account?
+        <a href="/acounts/login">Sign in</a>
+      </div>
+    </main>
   </body>
 </html>
