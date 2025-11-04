@@ -4,53 +4,76 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <h1>
-      Welcome
-      <%= currentUser.name%>
-    </h1>
-    <a href="/accounts/logout">Logout</a>
-    <button class="create-folder">Create Folder</button>
-
-    <dialog id="create-folder-dialog">
-      <h2>Create Folder</h2>
-      <form action="/folders" method="POST">
-        <p>
-          <label for="name">Folder Name: </label>
-          <input type="text" name="name" id="name" />
+    <%- include("partials/header") %>
+    <main class="main-home">
+      <div class="welcome">
+        <p class="welcome-name">
+          Welcome
+          <%= currentUser.name %>
         </p>
-        <p>
-          <button type="button">Quit</button>
-          <button type="submit">Submit</button>
-        </p>
-      </form>
-    </dialog>
+        <button class="create-folder">
+          <img src="assets/folder.svg" alt="" />
+          <p>Create</p>
+        </button>
+      </div>
+      <dialog id="create-folder-dialog">
+        <h2>Create Folder</h2>
+        <form action="/folders" method="POST">
+          <p>
+            <label for="name">Folder Name: </label>
+            <input type="text" name="name" id="name" required maxlength="16" />
+          </p>
+          <p>
+            <button type="button">Quit</button>
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </dialog>
 
-    <main>
-      <h2>Folders:</h2>
+      <% if(currentUser.folders.length < 1){ %>
+      <div class="no-folders">
+        <img src="assets/no_folder.svg" alt="" />
+        <p>Looks like you don't have any folders yet.</p>
+      </div>
+      <% } else { %>
       <div>
+        <h2>Folders</h2>
         <%currentUser.folders.forEach(function(folder){%>
         <div class="folder-card">
-          <p><%= folder.name%></p>
-          <p><%= new Date(folder.createdAt).toDateString()%></p>
-          <a href="/folders/<%=folder.id%>">View</a>
-          <a href="/folders/<%=folder.id%>/update">Update</a>
-          <form
-            action="/folders/<%=folder.id%>/delete"
-            method="POST"
-            style="display: inline"
-          >
-            <button
-              type="submit"
-              onclick="return confirm('Are you sure you want to delete this folder?')"
+          <div>
+            <p class="folder-name"><%= folder.name%></p>
+            <p class="folder-date">
+              <%= new Date(folder.createdAt).toDateString()%>
+            </p>
+          </div>
+          <div class="folder-card-options">
+            <a class="folder-view" href="/folders/<%=folder.id%>">
+              <img src="assets/eye.svg" alt="" />
+            </a>
+            <a class="folder-edit" href="/folders/<%=folder.id%>/update">
+              <img src="assets/pencil.svg" alt="" />
+            </a>
+
+            <form
+              action="/folders/<%=folder.id%>/delete"
+              method="POST"
+              style="display: inline"
             >
-              Delete
-            </button>
-          </form>
+              <button
+                type="submit"
+                onclick="return confirm('Are you sure you want to delete this folder?')"
+              >
+                <img src="assets/trash.svg" alt="" />
+              </button>
+            </form>
+          </div>
         </div>
+        <%}) %>
       </div>
-      <%}) %>
+      <% } %>
     </main>
 
     <script>
