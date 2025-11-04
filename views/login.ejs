@@ -4,23 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Log In</title>
+    <link rel="stylesheet" href="/css/forms.css" />
   </head>
   <body>
-    <h1>Log In Page</h1>
-    <form action="/accounts/login" method="POST">
-      <p>
-        <label for="email">Email: </label>
-        <input type="email" name="username" id="email" />
-      </p>
+    <main>
+      <div class="form-header">
+        <h1>Login to your account</h1>
+        <p>Enter your email below to login to your account</p>
+      </div>
+      <form action="/accounts/login" method="POST">
+        <p>
+          <label for="email">Email: </label>
+          <input
+            type="email"
+            name="username"
+            id="email"
+            placeholder="m@example.com"
+          />
+        </p>
 
-      <p>
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password" />
-      </p>
-
-      <p>
-        <button type="submit">Submit</button>
-      </p>
-    </form>
+        <p>
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password" />
+          <span>Please enter your password.</span>
+        </p>
+        <% if (locals.info && info.message) { %>
+        <ul>
+          <li><%= info.message %></li>
+        </ul>
+        <% } %>
+        <p>
+          <button type="submit">Login</button>
+        </p>
+      </form>
+      <div class="signup-link">
+        Don't have an account?
+        <a href="/accounts/signup">Sign up</a>
+      </div>
+    </main>
   </body>
 </html>
