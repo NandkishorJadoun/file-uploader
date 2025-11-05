@@ -4,12 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=folder.name%></title>
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <h1><%=folder.name%></h1>
-    <button class="upload-file-btn">Add File</button>
+    <%- include("partials/header.ejs")%>
+    <main class="main-folder">
+      <div class="folder-name-add-file">
+        <p class="folder-name"><%=folder.name%></p>
+        <button class="upload-file-btn">
+          <img src="/assets/file.svg" alt="" />
+          <p>File</p>
+        </button>
+      </div>
+
+      <% if(folder.files.length < 1){ %>
+      <div class="empty-folder">
+        <img src="/assets/empty_folder.svg" alt="" />
+        <p>Looks like your folder is empty.</p>
+      </div>
+      <% } else {%>
+      <div class="file-container">
+        <h2>Files:</h2>
+        <%folder.files.forEach(function(file){ %>
+        <div class="file-card">
+          <div>
+            <p class="file-name"><%= file.name%></p>
+            <p class="file-size">Size: <%= file.size%></p>
+            <p class="file-date">
+              <%= new Date(file.createdAt).toLocaleString()%>
+            </p>
+          </div>
+          <div class="file-options">
+            <a class="file-view" href="<%= file.view_url%>">
+              <img src="/assets/view.svg" alt="" />
+            </a>
+            <a class="file-download" href="<%= file.download_url%>"
+              ><img src="/assets/download.svg" alt=""
+            /></a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </main>
     <dialog class="upload-file-dialog">
       <form
+        class="form"
         action="/folders/<%=folder.id%>/file"
         method="POST"
         enctype="multipart/form-data"
@@ -19,26 +59,23 @@
           <input type="file" name="file" id="file" accept="image/*,.pdf" />
         </p>
         <p>
-          <button type="submit">Submit</button>
+          <button class="form-button" type="submit">Submit</button>
+          <button class="close-dialog form-button" type="button">Quit</button>
         </p>
       </form>
     </dialog>
 
-    <h2>Files:</h2>
-    <%folder.files.forEach(function(file){ %>
-    <p><%= file.name%></p>
-    <p><%= file.size%></p>
-    <p><%= file.createdAt%></p>
-    <a href="<%= file.view_url%>">View</a>
-    <a href="<%= file.download_url%>">Download</a>
-    <% }) %>
-
     <script>
       const uploadFileBtn = document.querySelector(".upload-file-btn");
       const uploadFileDialog = document.querySelector(".upload-file-dialog");
+      const closeDialog = document.querySelector(".close-dialog");
 
       uploadFileBtn.addEventListener("click", () => {
         uploadFileDialog.showModal();
+      });
+
+      closeDialog.addEventListener("click", () => {
+        uploadFileDialog.close();
       });
     </script>
   </body>

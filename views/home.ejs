@@ -10,10 +10,7 @@
     <%- include("partials/header") %>
     <main class="main-home">
       <div class="welcome">
-        <p class="welcome-name">
-          Welcome
-          <%= currentUser.name %>
-        </p>
+        <p class="welcome-name">Welcome <%= currentUser.name %></p>
         <button class="create-folder">
           <img src="assets/folder.svg" alt="" />
           <p>Create</p>
@@ -21,14 +18,14 @@
       </div>
       <dialog id="create-folder-dialog">
         <h2>Create Folder</h2>
-        <form action="/folders" method="POST">
+        <form class="form" id="folder-form" action="/folders" method="POST">
           <p>
             <label for="name">Folder Name: </label>
             <input type="text" name="name" id="name" required maxlength="16" />
           </p>
           <p>
-            <button type="button">Quit</button>
-            <button type="submit">Submit</button>
+            <button class="close-dialog form-button" type="button">Quit</button>
+            <button class="form-button" type="submit">Submit</button>
           </p>
         </form>
       </dialog>
@@ -81,8 +78,14 @@
       const createFolderDialog = document.querySelector(
         "#create-folder-dialog",
       );
+
+      const closeDialog = document.querySelector(".close-dialog");
       createFolderBtn.addEventListener("click", () => {
         createFolderDialog.showModal();
+      });
+
+      closeDialog.addEventListener("click", () => {
+        createFolderDialog.close();
       });
     </script>
   </body>

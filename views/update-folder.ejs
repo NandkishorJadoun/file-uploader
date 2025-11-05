@@ -4,22 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Update Folder</title>
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <a href="/">Get Back</a>
-    <form action="/folders/<%= folder.id %>/update" method="POST">
-      <p>
-        <label for="folderName">Update Folder Name: </label>
-        <input
-          type="text"
-          name="folderName"
-          id="folderName"
-          value="<%= folder.name%>"
-        />
-      </p>
-    </form>
-    <p>
-      <button type="submit">Update</button>
-    </p>
+    <%- include("partials/header.ejs")%>
+    <main class="update-main">
+      <form
+        class="form"
+        action="/folders/<%= folder.id %>/update"
+        method="POST"
+      >
+        <p>
+          <label for="folderName">Update Folder Name: </label>
+          <input
+            type="text"
+            name="folderName"
+            id="folderName"
+            value="<%= folder.name%>"
+          />
+        </p>
+        <p>
+          <button class="form-button" type="submit">Update</button>
+          <button class="form-button" onclick='() => window.location.href("/")'>
+            Get Back
+          </button>
+        </p>
+      </form>
+    </main>
   </body>
 </html>
