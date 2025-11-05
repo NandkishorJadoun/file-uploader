@@ -82,10 +82,7 @@ const uploadFilePost = async (req, res) => {
   const { folderId } = req.params;
   const uploadResult = await uploadOnCloudinary(req.file.path);
 
-  const downloadUrl = makeDownloadUrl(
-    uploadResult.secure_url,
-    uploadResult.original_filename,
-  );
+  const downloadUrl = makeDownloadUrl(uploadResult.secure_url);
 
   const formatSize = formatBytes(uploadResult.bytes);
 
