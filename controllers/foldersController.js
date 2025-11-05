@@ -83,7 +83,7 @@ const uploadFilePost = async (req, res) => {
   const uploadResult = await uploadOnCloudinary(req.file.path);
 
   const downloadUrl = makeDownloadUrl(
-    uploadResult.url,
+    uploadResult.secure_url,
     uploadResult.original_filename,
   );
 
@@ -93,7 +93,7 @@ const uploadFilePost = async (req, res) => {
     data: {
       name: uploadResult.original_filename,
       size: formatSize,
-      view_url: uploadResult.url,
+      view_url: uploadResult.secure_url,
       download_url: downloadUrl,
       folderId: Number(folderId),
     },
